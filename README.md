@@ -1,6 +1,6 @@
 # Jerry
 
-Jerry Mouse, a static web server based on ASP.NET Core
+Jerry, a static web server based on ASP.NET Core
 
 ## Install
 
@@ -13,9 +13,6 @@ dotnet tool install -g Jerry
 ## Usage
 
 ```
-Description:
-  Jerry Mouse, a static web server based on ASP.NET Core.
-
 Usage:
   Jerry [options]
 

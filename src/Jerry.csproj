@@ -3,7 +3,7 @@
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>net8.0</TargetFramework>
-        <Version>0.1.0</Version>
+        <Version>0.1.1</Version>
         <ImplicitUsings>enable</ImplicitUsings>
         <IsTestProject>false</IsTestProject>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -12,10 +12,10 @@
         <Company>edi.wang</Company>
         <Product>Jerry</Product>
         <Authors>edi.wang@outlook.com</Authors>
-        <Description>Jerry Mouse, a static web server based on ASP.NET Core</Description>
+        <Description>Jerry, a static web server based on ASP.NET Core</Description>
         <PackageId>Jerry</PackageId>
         <PackageTags>web http static</PackageTags>
-        <PackageIcon>edi-logo-blue.png</PackageIcon>
+        <PackageIcon>mouse.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://edi.wang</PackageProjectUrl>
@@ -28,6 +28,6 @@
 
     <ItemGroup>
         <None Include="..\README.md" Pack="true" PackagePath="\"/>
-        <None Include="..\img\edi-logo-blue.png" Pack="true" PackagePath="\"/>
+        <None Include="..\img\mouse.png" Pack="true" PackagePath="\"/>
     </ItemGroup>
 </Project>

@@ -33,7 +33,7 @@ public class Program
             getDefaultValue: () => false,
             description: "Directory browser");
 
-        var rootCommand = new RootCommand("Jerry Mouse, a static web server based on ASP.NET Core.");
+        var rootCommand = new RootCommand("Jerry, a static web server based on ASP.NET Core.");
         rootCommand.AddOption(directoryOption);
         rootCommand.AddOption(portOption);
         rootCommand.AddOption(browserOption);
