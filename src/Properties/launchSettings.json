@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Jerry": {
+      "commandName": "Project",
+      "commandLineArgs": "-d \"E:\\Workspace\\wwwtest\" --directory-browser"
+    }
+  }
+}
