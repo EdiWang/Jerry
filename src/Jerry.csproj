@@ -15,10 +15,19 @@
         <Description>Jerry Mouse, a static web server based on ASP.NET Core</Description>
         <PackageId>Jerry</PackageId>
         <PackageTags>web http static</PackageTags>
+        <PackageIcon>edi-logo-blue.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://edi.wang</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/EdiWang/Jerry</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
     </ItemGroup>
 
+    <ItemGroup>
+        <None Include="..\README.md" Pack="true" PackagePath="\"/>
+        <None Include="..\img\edi-logo-blue.png" Pack="true" PackagePath="\"/>
+    </ItemGroup>
 </Project>
