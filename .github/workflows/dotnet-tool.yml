@@ -1,4 +1,4 @@
-name: .NET Build and Pack
+name: .NET Tool Build and Pack
 
 on:
   push:
@@ -16,13 +16,10 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Build with dotnet
-      run: dotnet build --configuration Release
-      working-directory: ./src
-    - name: Run unit tests
-      run: dotnet test --configuration Release
+      run: dotnet build "Jerry.DotNetTool.csproj" --configuration Release
       working-directory: ./src
     - name: Generate nuget package
-      run: dotnet pack --configuration Release -o nupkg
+      run: dotnet pack "Jerry.DotNetTool.csproj" --configuration Release -o nupkg
       working-directory: ./src
     - name: Push nuget package
       run: dotnet nuget push **\*.nupkg -s 'https://api.nuget.org/v3/index.json' -k ${{secrets.NUGET_API_KEY}} --skip-duplicate

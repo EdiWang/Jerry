@@ -6,12 +6,17 @@
         <Version>0.1.1</Version>
         <ImplicitUsings>enable</ImplicitUsings>
         <IsTestProject>false</IsTestProject>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <IsPackable>true</IsPackable>
+        <PackAsTool>true</PackAsTool>
         <Company>edi.wang</Company>
         <Product>Jerry</Product>
         <Authors>edi.wang@outlook.com</Authors>
         <Description>Jerry, a static web server based on ASP.NET Core</Description>
         <PackageId>Jerry</PackageId>
         <PackageTags>web http static</PackageTags>
+        <PackageIcon>mouse.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://edi.wang</PackageProjectUrl>
         <RepositoryUrl>https://github.com/EdiWang/Jerry</RepositoryUrl>
@@ -19,5 +24,10 @@
 
     <ItemGroup>
         <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\README.md" Pack="true" PackagePath="\"/>
+        <None Include="..\img\mouse.png" Pack="true" PackagePath="\"/>
     </ItemGroup>
 </Project>
