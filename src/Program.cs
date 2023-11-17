@@ -42,6 +42,8 @@ public class Program
         rootCommand.SetHandler(async (path, port, directoryBrowser, verbose) =>
         {
             var host = BuildApp(path, port, directoryBrowser, verbose);
+            host.Logger.LogInformation($"Serving directory: '{path}'");
+
             await host.RunAsync();
         }, directoryOption, portOption, browserOption, verboseOption);
 
