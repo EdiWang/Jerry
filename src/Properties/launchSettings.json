@@ -3,6 +3,14 @@
     "Jerry": {
       "commandName": "Project",
       "commandLineArgs": "-d \"E:\\Workspace\\wwwtest\" --directory-browser"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "environmentVariables": {
+        "ASPNETCORE_HTTP_PORTS": "8080"
+      },
+      "publishAllPorts": true
     }
   }
 }
