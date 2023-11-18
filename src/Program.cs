@@ -14,17 +14,17 @@ public class Program
     public static RootCommand BuildCommand()
     {
         var directoryOption = new Option<string>(
-            aliases: new[] { "--directory", "-d" },
+            aliases: ["--directory", "-d"],
             getDefaultValue: () => ".",
             description: "Web content directory.");
 
         var portOption = new Option<int>(
-            aliases: new[] { "--port", "-p" },
+            aliases: ["--port", "-p"],
             getDefaultValue: () => 8080,
             description: "HTTP server port.");
 
         var verboseOption = new Option<bool>(
-            aliases: new[] { "--verbose", "-v" },
+            aliases: ["--verbose", "-v"],
             getDefaultValue: () => false,
             description: "Verbose log");
 
