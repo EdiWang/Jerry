@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <Version>0.1.3</Version>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <IsTestProject>false</IsTestProject>
+        <Company>edi.wang</Company>
+        <Product>Jerry</Product>
+        <Authors>edi.wang@outlook.com</Authors>
+        <Description>Jerry, a static web server based on ASP.NET Core</Description>
+        <PackageId>Jerry</PackageId>
+        <PackageTags>web http static</PackageTags>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://edi.wang</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/EdiWang/Jerry</RepositoryUrl>
+        <PublishAot>true</PublishAot>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+    </ItemGroup>
+</Project>

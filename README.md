@@ -6,6 +6,10 @@ Jerry, a static web server based on ASP.NET Core
 
 You can choose either method to install Jerry
 
+### Compiled Binaries (AOT)
+
+Download executable for your OS platform in [Release](https://github.com/EdiWang/Jerry/releases), without installing .NET runtime.
+
 ### .NET Tool
 
 Requires [.NET 8.0 SDK](https://dot.net)
@@ -23,7 +27,7 @@ docker pull ediwang/jerry
 ## Usage
 
 
-### As .NET Tool
+### As .NET Tool or Standalone Executable
 
 ```
 Options:
