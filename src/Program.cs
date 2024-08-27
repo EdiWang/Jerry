@@ -11,27 +11,27 @@ public class Program
         await rootCommand.InvokeAsync(args);
     }
 
-    public static RootCommand BuildCommand()
+    private static RootCommand BuildCommand()
     {
         var directoryOption = new Option<string>(
-            aliases: ["--directory", "-d"],
-            getDefaultValue: () => ".",
-            description: "Web content directory.");
+            ["--directory", "-d"],
+            () => ".",
+            "Web content directory.");
 
         var portOption = new Option<int>(
-            aliases: ["--port", "-p"],
-            getDefaultValue: () => 8080,
-            description: "HTTP server port.");
+            ["--port", "-p"],
+            () => 8080,
+            "HTTP server port.");
 
         var verboseOption = new Option<bool>(
-            aliases: ["--verbose", "-v"],
-            getDefaultValue: () => false,
-            description: "Verbose log");
+            ["--verbose", "-v"],
+            () => false,
+            "Verbose log");
 
         var browserOption = new Option<bool>(
-            name: "--directory-browser",
-            getDefaultValue: () => false,
-            description: "Directory browser");
+            "--directory-browser",
+            () => false,
+            "Directory browser");
 
         var rootCommand = new RootCommand("Jerry, a static web server based on ASP.NET Core.");
         rootCommand.AddOption(directoryOption);
@@ -42,15 +42,14 @@ public class Program
         rootCommand.SetHandler(async (path, port, directoryBrowser, verbose) =>
         {
             var host = BuildApp(path, port, directoryBrowser, verbose);
-            host.Logger.LogInformation($"Serving directory: '{path}'");
-
+            LogInformation(host, $"Serving directory: '{path}'");
             await host.RunAsync();
         }, directoryOption, portOption, browserOption, verboseOption);
 
         return rootCommand;
     }
 
-    public static WebApplication BuildApp(string path, int port, bool directoryBrowser, bool verbose)
+    private static WebApplication BuildApp(string path, int port, bool directoryBrowser, bool verbose)
     {
         var webRoot = Path.GetFullPath(path);
         var builder = WebApplication.CreateSlimBuilder(new WebApplicationOptions
@@ -62,16 +61,27 @@ public class Program
 
         if (directoryBrowser) builder.Services.AddDirectoryBrowser();
 
-        builder.WebHost.ConfigureKestrel(options =>
+        ConfigureKestrel(builder.WebHost, port);
+
+        var host = builder.Build();
+
+        ConfigureMiddleware(host, directoryBrowser);
+
+        return host;
+    }
+
+    private static void ConfigureKestrel(IWebHostBuilder webHostBuilder, int port)
+    {
+        webHostBuilder.ConfigureKestrel(options =>
         {
             options.ListenAnyIP(port);
             options.AddServerHeader = false;
         });
+    }
 
-        var host = builder.Build();
-
+    private static void ConfigureMiddleware(WebApplication host, bool directoryBrowser)
+    {
         host.UseDefaultFiles();
-
         host.UseStaticFiles(new StaticFileOptions
         {
             ServeUnknownFileTypes = true
@@ -79,13 +89,16 @@ public class Program
 
         if (directoryBrowser)
         {
-            var fileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.WebRootPath));
+            var fileProvider = new PhysicalFileProvider(host.Environment.WebRootPath);
             host.UseDirectoryBrowser(new DirectoryBrowserOptions
             {
                 FileProvider = fileProvider
             });
         }
+    }
 
-        return host;
+    private static void LogInformation(WebApplication host, string message)
+    {
+        host.Logger.LogInformation(message);
     }
 }
