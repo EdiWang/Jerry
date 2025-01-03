@@ -33,19 +33,26 @@ docker pull ediwang/jerry
 Options:
   -d, --directory <directory>  Web content directory. [default: .]
   -p, --port <port>            HTTP server port. [default: 8080]
+  --use-https                  Use HTTPS [default: False]
   --directory-browser          Directory browser [default: False]
   -v, --verbose                Verbose log [default: False]
   --version                    Show version information
   -?, -h, --help               Show help and usage information
 ```
 
-Example
+### Examples
+
+Serve current directory on port 8080
+
+```powershell
+jerry -d .
+```
+
+Serve `E:\Workspace\wwwtest` on port 8080 with directory browser
 
 ```powershell
 jerry -d "E:\Workspace\wwwtest" --directory-browser
 ```
-
-This will serve the content of `E:\Workspace\wwwtest` on port 8080, and enable directory browser.
 
 ![image](https://github.com/EdiWang/Jerry/assets/3304703/e0402373-a897-4170-9d5d-bdc6caf75d03)
 
