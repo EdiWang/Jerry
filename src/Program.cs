@@ -8,7 +8,16 @@ public class Program
     public static async Task Main(string[] args)
     {
         var rootCommand = BuildCommand();
-        await rootCommand.InvokeAsync(args);
+
+        try
+        {
+            await rootCommand.InvokeAsync(args);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Unhandled exception: {ex.Message}");
+            Environment.Exit(1);
+        }
     }
 
     private static RootCommand BuildCommand()
@@ -23,6 +32,11 @@ public class Program
             () => 8080,
             "HTTP server port.");
 
+        var httpsOption = new Option<bool>(
+            "--use-https",
+            () => false,
+            "Enable HTTPS");
+
         var verboseOption = new Option<bool>(
             ["--verbose", "-v"],
             () => false,
@@ -36,20 +50,21 @@ public class Program
         var rootCommand = new RootCommand("Jerry, a static web server based on ASP.NET Core.");
         rootCommand.AddOption(directoryOption);
         rootCommand.AddOption(portOption);
+        rootCommand.AddOption(httpsOption);
         rootCommand.AddOption(browserOption);
         rootCommand.AddOption(verboseOption);
 
-        rootCommand.SetHandler(async (path, port, directoryBrowser, verbose) =>
+        rootCommand.SetHandler(async (path, port, https, directoryBrowser, verbose) =>
         {
-            var host = BuildApp(path, port, directoryBrowser, verbose);
+            var host = BuildApp(path, port, https, directoryBrowser, verbose);
             LogInformation(host, $"Serving directory: '{path}'");
             await host.RunAsync();
-        }, directoryOption, portOption, browserOption, verboseOption);
+        }, directoryOption, portOption, httpsOption, browserOption, verboseOption);
 
         return rootCommand;
     }
 
-    private static WebApplication BuildApp(string path, int port, bool directoryBrowser, bool verbose)
+    private static WebApplication BuildApp(string path, int port, bool https, bool directoryBrowser, bool verbose)
     {
         var webRoot = Path.GetFullPath(path);
         var builder = WebApplication.CreateSlimBuilder(new WebApplicationOptions
@@ -61,7 +76,9 @@ public class Program
 
         if (directoryBrowser) builder.Services.AddDirectoryBrowser();
 
-        ConfigureKestrel(builder.WebHost, port);
+        builder.Services.AddResponseCompression();
+
+        ConfigureKestrel(builder.WebHost, port, https);
 
         var host = builder.Build();
 
@@ -70,17 +87,26 @@ public class Program
         return host;
     }
 
-    private static void ConfigureKestrel(IWebHostBuilder webHostBuilder, int port)
+    private static void ConfigureKestrel(IWebHostBuilder webHostBuilder, int port, bool https)
     {
         webHostBuilder.ConfigureKestrel(options =>
         {
-            options.ListenAnyIP(port);
+            if (https)
+            {
+                options.ListenAnyIP(port, listenOptions => listenOptions.UseHttps());
+            }
+            else
+            {
+                options.ListenAnyIP(port);
+            }
+
             options.AddServerHeader = false;
         });
     }
 
     private static void ConfigureMiddleware(WebApplication host, bool directoryBrowser)
     {
+        host.UseResponseCompression();
         host.UseDefaultFiles();
         host.UseStaticFiles(new StaticFileOptions
         {
